@@ -1,0 +1,71 @@
+---
+title: "ChickWeight Data Anaysis"
+author: "Tim Kerins"
+date: "November 5, 2018"
+output: ioslides_presentation
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+##Introduction
+
+The purpose of this application is to create an interactive plot of the effects of diet on the early growth of chicks. It uses the ChickWeights dataset from the base R package. The app allows the user to manipulate the plot to get an overall view of the data as well as to zoom in on specific points of interest by using the checkboxes, a slider, and click and hover tools. 
+
+The application is hosted on the Shiny Server: https://tkerins24.shinyapps.io/devdatrawk4/
+
+The ui.R and server.R code can be found on RPubs: https://github.com/tkerins24/DevDataWk4
+
+##ChickWeight Dataset Summary
+
+Analysis using R code yielded 578 Observations of 4 variables:
+
+  - weight(gm): numeric
+  - Time (days): numeric: # of days since birth (measured every 2 days and on day 21)
+  - Chick: Ordered factor; 18 levels; unique chick identifier. 
+  - Diet: Factor with 4 levels
+
+Sample:  
+```{r, echo = TRUE}
+head(ChickWeight,3)
+```
+
+## Sample Plot
+
+(used as basis for interactive application) 
+```{r, echo = FALSE, warning=FALSE,message=FALSE}
+library(ggplot2)
+library(dplyr)
+```
+
+```{r, echo = FALSE}
+data(ChickWeight)
+p <- ggplot(ChickWeight, aes(x=Time,y=weight,color = Diet)) + geom_jitter(width = .25)+
+      geom_point() +  
+      labs(title="Effect of Diet on Chick Weights") +
+      labs(x="Time (Days)", y = "Weight (Grams)",legend = "Diet") +
+      geom_smooth(method = loess,se = FALSE)
+p    
+
+```
+
+## Navigation Tools on the Interactive Plot
+
+Use the Checkboxes to:
+
+- Select specific diets to view and compare.
+- Add/remove jitter to better see individual datapoints
+- Show or hide loess regression lines.
+
+Use the Day Range slider to set the range of days to view.
+
+  - The application automatically adjusts the x & y axis for the best view  
+
+Use the crosshair cursor to hover and/or click on specific datapoints:
+
+  - The x,y co-ordinates will appear in the box below the plot
+  
+  
+  "C:/Users/TimothyKerins/Documents/Stuff/Education/JohnsHopkins/Developing Data Products/DevelopDataProducts/DevDatraWk4"
